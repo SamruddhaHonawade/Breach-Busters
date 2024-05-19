@@ -1,25 +1,39 @@
-import pygetwindow as gw
-import time
-from datetime import datetime
+import tkinter as tk
 
+def login():
+    username = entry_username.get()
+    password = entry_password.get()
+    
+    # Add your login logic here
+    
+    if username == "admin" and password == "password":
+        label_result.config(text="Login successful", fg="green")
+    else:
+        label_result.config(text="Login failed", fg="red")
 
-def print_active_window_title():
-    last_active_window_title = None
-    while True:
-        try:
-            active_window = gw.getActiveWindow()
-            if active_window.title != last_active_window_title:
-                current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                print(f"Active window title: {active_window.title} | Accessed at: {current_time}")
-                last_active_window_title = active_window.title
+# Create the main window
+window = tk.Tk()
+window.title("Login")
 
-                # Check if the active window title contains certain keywords
-                if "settings" in active_window.title.lower() or "user" in active_window.title.lower():
-                    print(f"Alert! User is trying to access settings or change user information at {current_time}")
-        except Exception as e:
-            print(f"An error occurred: {e}")
+# Create the username label and entry
+label_username = tk.Label(window, text="Username:")
+label_username.pack()
+entry_username = tk.Entry(window)
+entry_username.pack()
 
-        time.sleep(1)  # delay for 1 second
+# Create the password label and entry
+label_password = tk.Label(window, text="Password:")
+label_password.pack()
+entry_password = tk.Entry(window, show="*")
+entry_password.pack()
 
-if __name__ == "__main__":
-    print_active_window_title()
+# Create the login button
+button_login = tk.Button(window, text="Login", command=login)
+button_login.pack()
+
+# Create the result label
+label_result = tk.Label(window, text="")
+label_result.pack()
+
+# Start the main loop
+window.mainloop()
